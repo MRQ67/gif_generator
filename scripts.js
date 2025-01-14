@@ -10,19 +10,19 @@ const data = [
     },
     {
       speech: "Success doesn’t just find you. You have to go out and get it.",
-      gif: "https://media.giphy.com/media/1lweXxLwVT1tFu0bFj/giphy.gif"
+      gif: ".gif"
     },
     {
       speech: "Don’t stop until you’re proud.",
-      gif: "https://media.giphy.com/media/l0HlJb3m6p4rGoxGw/giphy.gif"
+      gif: ".gif"
     },
     {
       speech: "It’s going to be hard, but hard does not mean impossible.",
-      gif: "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif"
+      gif: ".gif"
     },
     {
       speech: "Dream it. Believe it. Build it.",
-      gif: "https://media.giphy.com/media/l41lVSXLS3tcQhsx6/giphy.gif"
+      gif: ".gif"
     }
   ];
   
