@@ -1,6 +1,6 @@
 // API Endpoints and Keys
 const ZEN_QUOTES_URL = "https://zenquotes.io/api/random";
-const GIPHY_API_KEY = hvE8EfwlGB35uQ3m0uNWLqO3PkmnMQ7i; // Replace with your Giphy API key
+const GIPHY_API_KEY = "hvE8EfwlGB35uQ3m0uNWLqO3PkmnMQ7i"; // Replace with your Giphy API key
 const GIPHY_BASE_URL = "https://api.giphy.com/v1/gifs/search";
 
 // Get HTML elements
