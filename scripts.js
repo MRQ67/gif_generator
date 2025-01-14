@@ -1,63 +1,70 @@
-// Array of speeches and their associated GIFs
-const data = [
-    {
-      speech: "The harder you work for something, the greater you’ll feel when you achieve it.",
-      gif: "gifs/just_do_it.gif"
-    },
-    {
-      speech: "“End is not the end if fact E.N.D. Means 'Efforts Never Dies' “. – Dr. A.P.J. Abdul Kalam",
-      gif: "gifs/no_way.gif"
-    },
-    {
-      speech: "Success doesn’t just find you. You have to go out and get it.",
-      gif: ".gif"
-    },
-    {
-      speech: "Don’t stop until you’re proud.",
-      gif: ".gif"
-    },
-    {
-      speech: "It’s going to be hard, but hard does not mean impossible.",
-      gif: ".gif"
-    },
-    {
-      speech: "Dream it. Believe it. Build it.",
-      gif: ".gif"
-    }
-  ];
-  
-  // Get HTML elements
-  const speechBox = document.getElementById("speech-box");
-  const gifBox = document.getElementById("gif-box");
-  const generateBtn = document.getElementById("generate-btn");
-  
-  // Add event listener to the button
-  function updateMotivation() {
-    // Generate a random index
-    const randomIndex = Math.floor(Math.random() * data.length);
-  
-    // Update the speech and the GIF
-    speechBox.textContent = data[randomIndex].speech;
-    speechBox.classList.add("fade-in");
+// API Endpoints and Keys
+const ZEN_QUOTES_URL = "https://zenquotes.io/api/random";
+const GIPHY_API_KEY = process.env.APP_API_KEY; // Replace with your Giphy API key
+const GIPHY_BASE_URL = "https://api.giphy.com/v1/gifs/search";
 
-    gifBox.src = data[randomIndex].gif;
-    gifBox.classList.add("fade-in");
-  
-    // Ensure the GIF is displayed
+// Get HTML elements
+const speechBox = document.getElementById("speech-box");
+const gifBox = document.getElementById("gif-box");
+const generateBtn = document.getElementById("generate-btn");
+
+// Function to fetch a random quote
+async function fetchQuote() {
+  try {
+    const response = await fetch(ZEN_QUOTES_URL);
+    const data = await response.json();
+    return data[0]?.q || "Stay motivated!"; // Default quote if none is returned
+  } catch (error) {
+    console.error("Error fetching quote:", error);
+    return "Stay motivated!"; // Default quote in case of an error
+  }
+}
+
+// Function to fetch a GIF based on a keyword
+async function fetchGif(keyword) {
+  try {
+    const response = await fetch(
+      `${GIPHY_BASE_URL}?api_key=${GIPHY_API_KEY}&q=${keyword}&limit=1`
+    );
+    const data = await response.json();
+    return data?.data[0]?.images?.original?.url || ""; // Default empty string if no GIF found
+  } catch (error) {
+    console.error("Error fetching GIF:", error);
+    return ""; // Default empty string in case of an error
+  }
+}
+
+// Function to update the motivation
+async function updateMotivation() {
+  // Fetch the random quote
+  const quote = await fetchQuote();
+  speechBox.textContent = quote;
+  speechBox.classList.add("fade-in");
+
+  // Fetch the GIF based on the first word of the quote
+  const keyword = quote.split(" ")[0]; // Use the first word as the keyword
+  const gifUrl = await fetchGif(keyword);
+  if (gifUrl) {
+    gifBox.src = gifUrl;
     gifBox.style.display = "block";
+    gifBox.classList.add("fade-in");
+  } else {
+    gifBox.style.display = "none"; // Hide the GIF if not found
+  }
 
-    setTimeout(() => {
-      speechBox.classList.remove("fade-in");
-      gifBox.classList.remove("fade-in");
-    }, 500);
-  };
+  // Remove animation classes after a delay
+  setTimeout(() => {
+    speechBox.classList.remove("fade-in");
+    gifBox.classList.remove("fade-in");
+  }, 500);
+}
 
-  generateBtn.addEventListener("click", updateMotivation);
+// Add event listener to the button
+generateBtn.addEventListener("click", updateMotivation);
 
-  // Event listener for the Enter key
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      updateMotivation();
-    } 
-  });
-  
+// Event listener for the Enter key
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    updateMotivation();
+  }
+});
