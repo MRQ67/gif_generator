@@ -42,7 +42,7 @@ async function updateMotivation() {
   speechBox.classList.add("fade-in");
 
   // Fetch the GIF based on the first word of the quote
-  const keyword = quote.split(" ")[0]; // Use the first word as the keyword
+  const keyword = quote.split(" ")[5]; // Use the first word as the keyword
   const gifUrl = await fetchGif(keyword);
   if (gifUrl) {
     gifBox.src = gifUrl;
