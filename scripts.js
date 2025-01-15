@@ -11,23 +11,20 @@ const generateBtn = document.getElementById("generate-btn");
 // Fetch a random quote from ZenQuotes
 async function fetchQuote() {
   try {
-    const response = await fetch(ZEN_QUOTES_URL);
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
-    const data = await response.json();
-    return {
-      text: data[0].q,
-      author: data[0].a,
-    };
+      const response = await fetch("https://quotes-api-8qjm.onrender.com");
+      if (!response.ok) {
+          throw new Error("Failed to fetch quote");
+      }
+      const data = await response.json();
+      const quote = data[0].q;
+      const author = data[0].a;
+      return `${quote} — ${author}`;
   } catch (error) {
-    console.error("Failed to fetch the quote:", error);
-    return {
-      text: "Oops! Could not fetch a motivational quote. Try again later.",
-      author: "",
-    };
+      console.error("Error fetching quote:", error);
+      return "Could not fetch a quote at the moment. Please try again later.";
   }
 }
+
 
 // Fetch a random GIF from Giphy based on a keyword
 async function fetchGif(keyword) { // Replace with your Giphy API key
