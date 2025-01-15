@@ -11,7 +11,7 @@ const generateBtn = document.getElementById("generate-btn");
 // Fetch a random quote from ZenQuotes
 async function fetchQuote() {
   try {
-      const response = await fetch("https://quotes-api-8qjm.onrender.com");
+      const response = await fetch("https://quotes-api-8qjm.onrender.com/quote");
       if (!response.ok) {
           throw new Error("Failed to fetch quote");
       }
